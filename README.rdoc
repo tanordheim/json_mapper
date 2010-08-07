@@ -22,7 +22,57 @@ A Ruby gem for mapping data from JSON data structures into Ruby class representa
 
 == Usage
 
-Examples have not been written yet.
+=== Simple one to one mapping
+  class Model
+
+    include JSONMapper
+
+    # Map the "id" attribute from the JSON data structure to the id attribute of the class,
+    # using Integer as the data type
+    json_attribute :id, Integer
+
+    # Map the "model_title" attribute from the JSON data structure to the title attribute of
+    # the class, using String as the data type
+    json_attribute :title, :model_title, String
+  
+  end
+
+=== Complex many to one mapping
+  class Model
+
+    include JSONMapper
+
+    # Map the "id", "model_id" or "modelid" attribute (whatever is located first) from the
+    # JSON data structure to the id attribute of the class, using Integer as the data type
+    json_attribute :id, [ :id, :model_id, :modelid ], Integer
+
+  end
+
+=== Associations
+  class AssociatedClass
+
+    include JSONMapper
+
+    # Map the "id" of the JSON data structure to the id attribute of the class, using
+    # Integer as the data type
+    json_attribute :id, Integer
+
+  end
+
+  class Model
+
+    include JSONMapper
+
+    # Map the "association" attribute from the JSON data structure to an instance of
+    # the AssociatedClass class, mapping it to the association attribute of the class.
+    json_association :association, AssociatedClass 
+
+    # Map all entries in the "associations" array from the JSON data structure to
+    # an array of AssociatedClass instances, mapping them to the associations attribute
+    # of the class
+    json_associations :associations, AssociatedClass 
+
+  end
 
 == Requirements
 
