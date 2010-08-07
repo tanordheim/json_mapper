@@ -1,15 +1,43 @@
-= json_mapper
+= JSON Mapper
+by Trond Arve Nordheim -
+{Binary Marbles}[http://www.binarymarbles.com/]
 
-Description goes here.
+== NOTICE
+
+This is a project under heavy development. The API is far from stable yet, and
+the code is very unclean in some places. The API won't be considered stable
+until full tests are available verifying that all functionality is working as
+expected.
+
+== Description
+
+A Ruby gem for mapping data from JSON data structures into Ruby class representations.
+
+== Features
+
+ * Simple one to one mappings
+ * Complex mappings (many to one)
+ * Associations
+ * Type checking
+
+== Usage
+
+Examples have not been written yet.
+
+== Requirements
+
+Not yet documented.
+
+== Installation
+
+ $ gem install json_mapper
 
 == Note on Patches/Pull Requests
  
 * Fork the project.
 * Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
+* Add tests for it. This is important so I don't break it in a future version unintentionally.
+* Commit, do not mess with rakefile, version, or history. (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
 == Copyright
