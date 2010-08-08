@@ -55,6 +55,13 @@ class JSONMapperTest < Test::Unit::TestCase
       model.id.should == 1
 
     end
+
+    should "not overwrite initial value when assigning values from different sources into an attribute" do
+
+      model = ComplexModel.parse('{ "id": 1, "attribute_id": 2 }')
+      model.id.should == 1
+
+    end
     
     should "assign another model into an attribute" do
 
