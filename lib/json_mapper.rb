@@ -37,10 +37,20 @@ module JSONMapper
       @attributes[to_s] || []
     end
 
-    def parse(data)
+    def parse(data, options = {})
 
       # Parse the data into a hash
       json = JSON.parse(data, { :symbolize_names => true })
+
+      # If we need to shift the structure, do that now
+      shift = options.delete(:shift)
+      unless shift.nil?
+        shift = [ shift ] unless shift.is_a?(Array)
+        shift.each do |s|
+          break unless json.key?(s) # Break out if we can't find the element we're looking for
+          json = json[s]
+        end
+      end
 
       # Parse the JSON data structure
       parse_json(json)

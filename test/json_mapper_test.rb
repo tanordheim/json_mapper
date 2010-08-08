@@ -99,6 +99,22 @@ class JSONMapperTest < Test::Unit::TestCase
       model.simples.last.title.should == "Simple JSON title #2"
     end
 
+    should "be able to shift into a data structure to find the root element" do
+
+      json = '{ "foo": { "id": 1 } }'
+      model = SimpleModel.parse(json, :shift => :foo)
+      model.id.should == 1
+
+    end
+
+    should "be able to shift deep into a data structure to find the root element" do
+
+      json = '{ "foo": { "bar": { "id": 1 } } }'
+      model = SimpleModel.parse(json, :shift => [ :foo, :bar ])
+      model.id.should == 1
+
+    end
+
   end
 
 end
