@@ -76,7 +76,7 @@ A Ruby gem for mapping data from JSON data structures into Ruby class representa
 
 == Requirements
 
-* {oauth}[http://rubygems.org/gems/oauth]
+* {json}[http://rubygems.org/gems/json]
 
 == Installation
 
