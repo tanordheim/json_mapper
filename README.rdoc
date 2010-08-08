@@ -65,18 +65,18 @@ A Ruby gem for mapping data from JSON data structures into Ruby class representa
 
     # Map the "association" attribute from the JSON data structure to an instance of
     # the AssociatedClass class, mapping it to the association attribute of the class.
-    json_association :association, AssociatedClass 
+    json_attribute :association, AssociatedClass 
 
     # Map all entries in the "associations" array from the JSON data structure to
     # an array of AssociatedClass instances, mapping them to the associations attribute
     # of the class
-    json_associations :associations, AssociatedClass 
+    json_attributes :associations, AssociatedClass 
 
   end
 
 == Requirements
 
-Not yet documented.
+ * {json}[http://rubygems.org/gems/json]
 
 == Installation
 
