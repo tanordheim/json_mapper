@@ -13,8 +13,6 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/tanordheim/json_mapper"
   gem.authors = [ "Trond Arve Nordheim" ]
 
-  gem.files = [ "LICENSE", "Rakefile", "Readme.RDOC", "VERSION" ]
-
   gem.add_bundler_dependencies
 
 end
