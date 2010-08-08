@@ -21,4 +21,6 @@ class ComplexModel
   json_attributes :integers, Integer
   json_attributes :delimited, DelimitedString, :delimiter => ","
 
+  json_attribute :self_referential, "self", SimpleModel
+
 end

@@ -7,6 +7,7 @@ module JSONMapper
 
   def self.included(base)
     base.instance_variable_set("@attributes", {})
+    base.instance_variable_set("@json_data", {})
     base.extend ClassMethods
   end
 
@@ -38,6 +39,10 @@ module JSONMapper
       @attributes[to_s] || []
     end
 
+    def json_data
+      @json_data[to_s] || []
+    end
+
     def parse(data, options = {})
       json = get_json_structure(data, options)
       parse_json(json)
@@ -59,6 +64,9 @@ module JSONMapper
     end
 
     def parse_json(json)
+
+      # Set the JSON data for this instance
+      @json_data[to_s] = json
       
       # Create a new instance of ourselves
       instance = new
@@ -136,10 +144,10 @@ module JSONMapper
         raise ArgumentError.new("Type parameter is required")
       end
 
-      # If the first argument is a symbol or an array, that's
+      # If the first argument is a symbol, string or an array, that's
       # a specific source attribute mapping. If not, use the
       # specified name as the source attribute name.
-      if args[0].is_a?(Symbol) || args[0].is_a?(Array)
+      if args[0].is_a?(Symbol) || args[0].is_a?(Array) || args[0].is_a?(String)
         source_attributes = args.delete_at(0)
       else
         source_attributes = name
@@ -164,6 +172,9 @@ module JSONMapper
 
     def is_mapped?(attribute, json)
 
+      # Just return true if this attribute is potentially self-referencing
+      return true if attribute.self_referential?
+
       attribute.source_attributes.each do |source_attribute|
         if json.key?(source_attribute)
           return true
@@ -180,6 +191,11 @@ module JSONMapper
           return json[source_attribute]
         end
       end
+
+      # If no mapping could be found and this attribute is potentially
+      # self-referencing, return the current JSON data as the mapped value
+      return json_data if attribute.self_referential?
+
       return nil
 
     end

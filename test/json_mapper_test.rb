@@ -138,6 +138,15 @@ class JSONMapperTest < Test::Unit::TestCase
 
     end
 
+    should "be able to map an object to self" do
+
+      json = '{ "id": 1 }'
+      model = ComplexModel.parse(json)
+      model.id.should == 1
+      model.self_referential.id.should == 1
+
+    end
+
   end
 
 end

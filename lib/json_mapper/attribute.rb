@@ -15,6 +15,10 @@ class Attribute
     @method_name ||= self.name.to_s.tr("-", "_")
   end
 
+  def self_referential?
+    self.source_attributes.include?("self")
+  end
+
   def typecast(value)
 
     return value if value.nil?

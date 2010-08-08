@@ -17,5 +17,9 @@ class AttributeList < ::Array
 
   def typecast
   end
+
+  def self_referential?
+    false # Attribute lists can't be self referential
+  end
   
 end
