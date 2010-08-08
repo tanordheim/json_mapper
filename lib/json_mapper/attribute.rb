@@ -1,14 +1,13 @@
 class Attribute
 
-  attr_accessor :name, :source_attributes, :type
+  attr_accessor :name, :source_attributes, :type, :options
 
-  Types = [ String, Integer, Boolean, DateTime ]
-
-  def initialize(name, source_attributes, type)
+  def initialize(name, source_attributes, type, options = {})
     
     self.name = name
     self.source_attributes = source_attributes.is_a?(Array) ? source_attributes : [ source_attributes ]
     self.type = type
+    self.options = options
 
   end
 
@@ -21,6 +20,9 @@ class Attribute
     return value if value.nil?
 
     if self.type == String then return value.to_s
+    elsif self.type == DelimitedString
+      self.options[:delimiter] ||= ","
+      return value.split(self.options[:delimiter])
     elsif self.type == Integer then return value.to_i
     elsif self.type == Boolean then return %w(true t 1).include?(value.to_s.downcase)
     elsif self.type == DateTime then return Date.parse(value.to_s)

@@ -127,6 +127,17 @@ class JSONMapperTest < Test::Unit::TestCase
 
     end
 
+    should "be able to use a delimited string as an array" do
+
+      json = '{ "delimited": "foo,bar,baz" }'
+      model = ComplexModel.parse(json)
+      model.delimited.size.should == 3
+      model.delimited[0].should == "foo"
+      model.delimited[1].should == "bar"
+      model.delimited[2].should == "baz"
+
+    end
+
   end
 
 end

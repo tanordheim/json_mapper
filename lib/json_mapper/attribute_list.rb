@@ -1,12 +1,13 @@
 class AttributeList < ::Array
 
-  attr_accessor :name, :source_attributes, :type
+  attr_accessor :name, :source_attributes, :type, :options
 
-  def initialize(name, source_attributes, type)
+  def initialize(name, source_attributes, type, options = {})
 
     self.name = name
     self.source_attributes = source_attributes.is_a?(Array) ? source_attributes : [ source_attributes ]
     self.type = type
+    self.options = options
 
   end
 

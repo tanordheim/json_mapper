@@ -19,5 +19,6 @@ class ComplexModel
   json_attribute :simple, SimpleModel
   json_attributes :simples, SimpleModel
   json_attributes :integers, Integer
+  json_attributes :delimited, DelimitedString, :delimiter => ","
 
 end

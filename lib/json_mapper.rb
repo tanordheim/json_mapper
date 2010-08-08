@@ -1,6 +1,7 @@
 require "json"
 
 class Boolean; end
+class DelimitedString; end
 
 module JSONMapper
 
@@ -13,8 +14,8 @@ module JSONMapper
 
     def json_attribute(name, *args)
 
-      source_attributes, type = extract_attribute_data(name, *args)
-      attribute = Attribute.new(name, source_attributes, type)
+      source_attributes, type, options = extract_attribute_data(name, *args)
+      attribute = Attribute.new(name, source_attributes, type, options)
       @attributes[to_s] ||= []
       @attributes[to_s] << attribute
 
@@ -24,8 +25,8 @@ module JSONMapper
 
     def json_attributes(name, *args)
 
-      source_attributes, type = extract_attribute_data(name, *args)
-      attribute = AttributeList.new(name, source_attributes, type)
+      source_attributes, type, options = extract_attribute_data(name, *args)
+      attribute = AttributeList.new(name, source_attributes, type, options)
       @attributes[to_s] ||= []
       @attributes[to_s] << attribute
 
@@ -77,7 +78,19 @@ module JSONMapper
           if attribute.is_a?(AttributeList)
             value = [ value ] unless value.is_a?(Array)
             value.each do |v|
-              instance.send("#{attribute.name}") << build_attribute(attribute.name, attribute.type).typecast(v)
+
+              list_attribute = build_attribute(attribute.name, attribute.type, attribute.options)
+              list_attribute_value = list_attribute.typecast(v)
+
+              # Some times typecasting a value for a list will produce another list, in the case of
+              # for instance DelimitedString. If this is the case, we concat that array to the list.
+              # Otherwise, we just append the value.
+              if list_attribute_value.is_a?(Array)
+                instance.send("#{attribute.name}").concat(list_attribute_value)
+              else
+                instance.send("#{attribute.name}") << list_attribute_value
+              end
+
             end
           else
             instance.send("#{attribute.name}=".to_sym, attribute.typecast(value))
@@ -110,8 +123,8 @@ module JSONMapper
 
     end
 
-    def build_attribute(name, type)
-      Attribute.new(name, name, type)
+    def build_attribute(name, type, options)
+      Attribute.new(name, name, type, options)
     end
 
     def extract_attribute_data(name, *args)
@@ -134,12 +147,18 @@ module JSONMapper
 
       # The remaining first argument must be a valid data type
       if args[0].is_a?(Class)
-        type = args[0]
+        type = args.delete_at(0)
       else
         raise ArgumentError.new("Invalid type parameter specified")
       end
 
-      return source_attributes, type
+      # If we have anything remaining, and it's a hash, use it as our options
+      options = {}
+      if !args.empty? && args.first.is_a?(Hash)
+        options = args.delete_at(0)
+      end
+
+      return source_attributes, type, options
  
     end
 
