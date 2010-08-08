@@ -38,22 +38,22 @@ module JSONMapper
     end
 
     def parse(data, options = {})
+      json = get_json_structure(data, options)
+      parse_json(json)
+    end
 
-      # Parse the data into a hash
-      json = JSON.parse(data, { :symbolize_names => true })
+    def parse_collection(data, options = {})
 
-      # If we need to shift the structure, do that now
-      shift = options.delete(:shift)
-      unless shift.nil?
-        shift = [ shift ] unless shift.is_a?(Array)
-        shift.each do |s|
-          break unless json.key?(s) # Break out if we can't find the element we're looking for
-          json = json[s]
+      collection = []
+      json = get_json_structure(data, options)
+
+      if json.is_a?(Array)
+        json.each do |element|
+          collection << parse_json(element)
         end
       end
 
-      # Parse the JSON data structure
-      parse_json(json)
+      collection
 
     end
 
@@ -90,6 +90,25 @@ module JSONMapper
     end
 
     private
+
+    def get_json_structure(data, options = {})
+      
+      # Parse the data into a hash
+      json = JSON.parse(data, { :symbolize_names => true })
+
+      # If we need to shift the structure, do that now
+      shift = options.delete(:shift)
+      unless shift.nil?
+        shift = [ shift ] unless shift.is_a?(Array)
+        shift.each do |s|
+          break unless json.key?(s) # Break out if we can't find the element we're looking for
+          json = json[s]
+        end
+      end
+
+      json
+
+    end
 
     def build_attribute(name, type)
       Attribute.new(name, name, type)

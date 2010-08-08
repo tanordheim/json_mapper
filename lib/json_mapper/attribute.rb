@@ -2,7 +2,7 @@ class Attribute
 
   attr_accessor :name, :source_attributes, :type
 
-  Types = [ String, Integer, Boolean ]
+  Types = [ String, Integer, Boolean, DateTime ]
 
   def initialize(name, source_attributes, type)
     
@@ -22,7 +22,8 @@ class Attribute
 
     if self.type == String then return value.to_s
     elsif self.type == Integer then return value.to_i
-    elsif self.type == Boolean then return value.to_s == "true"
+    elsif self.type == Boolean then return %w(true t 1).include?(value.to_s.downcase)
+    elsif self.type == DateTime then return Date.parse(value.to_s)
     else
 
       # If our type is a JSONMapper instance, delegate the

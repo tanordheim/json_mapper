@@ -44,6 +44,7 @@ class JSONMapperTest < Test::Unit::TestCase
       model.id.should == 1
       model.title.should == "Simple JSON title"
       model.boolean.should == true
+      model.datetime.should == Date.parse("2010-10-08 17:59:46")
     end
 
     should "assign value from different sources into an attribute" do
@@ -112,6 +113,17 @@ class JSONMapperTest < Test::Unit::TestCase
       json = '{ "foo": { "bar": { "id": 1 } } }'
       model = SimpleModel.parse(json, :shift => [ :foo, :bar ])
       model.id.should == 1
+
+    end
+
+    should "generate a collection of objects from an array" do
+
+      json = '[ { "id": 1 }, { "id": 2 } ]'
+      models = SimpleModel.parse_collection(json)
+      models.size.should == 2
+      
+      models.first.id.should == 1
+      models.last.id.should == 2
 
     end
 
