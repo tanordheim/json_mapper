@@ -27,7 +27,12 @@ class Attribute
     elsif self.type == DelimitedString
       self.options[:delimiter] ||= ","
       return value.split(self.options[:delimiter])
-    elsif self.type == Integer then return value.to_i
+    elsif self.type == Integer
+      begin
+        return value.to_i
+      rescue
+        return nil
+      end
     elsif self.type == Boolean then return %w(true t 1).include?(value.to_s.downcase)
     elsif self.type == DateTime then return Date.parse(value.to_s)
     else
