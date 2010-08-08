@@ -15,10 +15,10 @@ A Ruby gem for mapping data from JSON data structures into Ruby class representa
 
 == Features
 
- * Simple one to one mappings
- * Complex mappings (many to one)
- * Associations
- * Type checking
+* Simple one to one mappings
+* Complex mappings (many to one)
+* Associations
+* Type checking
 
 == Usage
 
@@ -76,7 +76,7 @@ A Ruby gem for mapping data from JSON data structures into Ruby class representa
 
 == Requirements
 
- * {json}[http://rubygems.org/gems/json]
+* {oauth}[http://rubygems.org/gems/oauth]
 
 == Installation
 
