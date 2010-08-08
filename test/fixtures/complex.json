@@ -1,0 +1,21 @@
+{
+  "id": 1,
+  "title": "Complex JSON title",
+  "simple": {
+    "id": 1,
+    "title": "Simple JSON title",
+    "boolean": true
+  },
+  "simples": [
+    {
+      "id": 1,
+      "title": "Simple JSON title #1",
+      "boolean": true
+    },
+    {
+      "id": 2,
+      "title": "Simple JSON title #2",
+      "boolean": true
+    }
+  ]
+}
