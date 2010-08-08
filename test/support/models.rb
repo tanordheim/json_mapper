@@ -3,6 +3,7 @@ class SimpleModel
   include JSONMapper
 
   json_attribute :id, Integer
+  json_attribute :money, Float
   json_attribute :title, String
   json_attribute :boolean, Boolean
   json_attribute :datetime, DateTime

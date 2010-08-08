@@ -42,6 +42,7 @@ class JSONMapperTest < Test::Unit::TestCase
     should "parse simple json structure into a ruby object" do
       model = SimpleModel.parse(fixture_file("simple.json"))
       model.id.should == 1
+      model.money.should == 125.50
       model.title.should == "Simple JSON title"
       model.boolean.should == true
       model.datetime.should == Date.parse("2010-10-08 17:59:46")

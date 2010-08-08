@@ -33,6 +33,12 @@ class Attribute
       rescue
         return nil
       end
+    elsif self.type == Float
+      begin
+        return value.to_f
+      rescue
+        return nil
+      end
     elsif self.type == Boolean then return %w(true t 1).include?(value.to_s.downcase)
     elsif self.type == DateTime then return Date.parse(value.to_s)
     else
