@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "init.rb",
+     "json_mapper.gemspec",
      "lib/json_mapper.rb",
      "lib/json_mapper/attribute.rb",
      "lib/json_mapper/attribute_list.rb",
