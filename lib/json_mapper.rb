@@ -53,18 +53,9 @@ module JSONMapper
 
     def parse_collection(data, options = {})
 
-      collection = []
-      return collection if data.nil? || data == ""
-
+      return [] if data.nil? || data == ""
       json = get_json_structure(data, options)
-
-      if json.is_a?(Array)
-        json.each do |element|
-          collection << parse_json(element)
-        end
-      end
-
-      collection
+      parse_json_collection(json)
 
     end
 
@@ -115,12 +106,26 @@ module JSONMapper
 
     end
 
+    def parse_json_collection(json)
+
+      collection = []
+
+      if json.is_a?(Array)
+        json.each do |element|
+          collection << parse_json(element)
+        end
+      end
+
+      collection
+
+    end
+
     private
 
     def get_json_structure(data, options = {})
       
       # Parse the data into a hash
-      json = JSON.parse(data, { :symbolize_names => true })
+      json = Parser.parse(data)
 
       # If we need to shift the structure, do that now
       shift = options.delete(:shift)
@@ -234,5 +239,6 @@ module JSONMapper
 
 end
 
+require "json_mapper/parser"
 require "json_mapper/attribute"
 require "json_mapper/attribute_list"
