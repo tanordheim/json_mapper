@@ -44,8 +44,11 @@ module JSONMapper
     end
 
     def parse(data, options = {})
+
+      return nil if data.nil? || data == ""
       json = get_json_structure(data, options)
       parse_json(json)
+
     end
 
     def parse_collection(data, options = {})
