@@ -94,6 +94,7 @@ class JSONMapperTest < Test::Unit::TestCase
       model.model_title.should == "Complex JSON title"
       model.simple.id.should == 1
       model.simple.title.should == "Simple JSON title"
+      model.nested_test.should == "foo bar"
       model.simples.size.should == 2
       model.simples.first.id.should == 1
       model.simples.first.title.should == "Simple JSON title #1"

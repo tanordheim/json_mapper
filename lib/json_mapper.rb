@@ -147,7 +147,7 @@ module JSONMapper
       # If the first argument is a symbol, string or an array, that's
       # a specific source attribute mapping. If not, use the
       # specified name as the source attribute name.
-      if args[0].is_a?(Symbol) || args[0].is_a?(Array) || args[0].is_a?(String)
+      if args[0].is_a?(Symbol) || args[0].is_a?(Array) || args[0].is_a?(String) || args[0].is_a?(Hash)
         source_attributes = args.delete_at(0)
       else
         source_attributes = name
@@ -176,7 +176,16 @@ module JSONMapper
       return true if attribute.self_referential?
 
       attribute.source_attributes.each do |source_attribute|
-        if json.key?(source_attribute)
+
+        # If the source attribute is a hash, do a key/value lookup on the json data
+        if source_attribute.is_a?(Hash)
+
+          source_key = source_attribute.keys.first
+          if json.key?(source_key) && json[source_key].key?(source_attribute[source_key])
+            return true
+          end
+
+        elsif json.key?(source_attribute)
           return true
         end
       end
@@ -187,9 +196,19 @@ module JSONMapper
     def mapping_value(attribute, json)
       
       attribute.source_attributes.each do |source_attribute|
-        if json.key?(source_attribute)
+        
+        # If the source attribute is a hash, do a key/value lookup on the json data
+        if source_attribute.is_a?(Hash)
+
+          source_key = source_attribute.keys.first
+          if json.key?(source_key) && json[source_key].key?(source_attribute[source_key])
+            return json[source_key][source_attribute[source_key]]
+          end
+
+         elsif json.key?(source_attribute)
           return json[source_attribute]
         end
+
       end
 
       # If no mapping could be found and this attribute is potentially

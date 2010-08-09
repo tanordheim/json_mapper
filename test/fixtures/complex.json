@@ -6,6 +6,9 @@
     "title": "Simple JSON title",
     "boolean": true
   },
+  "nested": {
+    "test": "foo bar"
+  },
   "simples": [
     {
       "id": 1,

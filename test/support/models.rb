@@ -18,6 +18,7 @@ class ComplexModel
   json_attribute :model_title, :title, String
   json_attribute :datetime, DateTime
   json_attribute :simple, SimpleModel
+  json_attribute :nested_test, { :nested => :test }, String
   json_attributes :simples, SimpleModel
   json_attributes :integers, Integer
   json_attributes :delimited, DelimitedString, :delimiter => ","
