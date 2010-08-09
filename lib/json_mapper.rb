@@ -9,9 +9,26 @@ module JSONMapper
     base.instance_variable_set("@attributes", {})
     base.instance_variable_set("@json_data", {})
     base.extend ClassMethods
+    base.send :include, InstanceMethods
+  end
+
+  module InstanceMethods
+
+    def json_data
+      self.class.json_data
+    end
+
   end
 
   module ClassMethods
+
+    def json_data=(data)
+      @json_data[to_s] = data
+    end
+
+    def json_data
+      @json_data[to_s]
+    end
 
     def json_attribute(name, *args)
 
@@ -39,9 +56,9 @@ module JSONMapper
       @attributes[to_s] || []
     end
 
-    def json_data
-      @json_data[to_s] || []
-    end
+    # def json_data
+    #   @json_data[to_s] || []
+    # end
 
     def parse(data, options = {})
 
@@ -62,7 +79,8 @@ module JSONMapper
     def parse_json(json)
 
       # Set the JSON data for this instance
-      @json_data[to_s] = json
+      self.json_data = json
+      # @json_data[to_s] = json
       
       # Create a new instance of ourselves
       instance = new
@@ -229,7 +247,7 @@ module JSONMapper
 
       # If no mapping could be found and this attribute is potentially
       # self-referencing, return the current JSON data as the mapped value
-      return json_data if attribute.self_referential?
+      return self.json_data if attribute.self_referential?
 
       return nil
 
