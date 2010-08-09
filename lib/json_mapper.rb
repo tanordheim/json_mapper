@@ -181,7 +181,7 @@ module JSONMapper
         if source_attribute.is_a?(Hash)
 
           source_key = source_attribute.keys.first
-          if json.key?(source_key) && json[source_key].key?(source_attribute[source_key])
+          if json.key?(source_key) && json[source_key].is_a?(Hash) && json[source_key].key?(source_attribute[source_key])
             return true
           end
 
