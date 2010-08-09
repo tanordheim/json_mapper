@@ -175,6 +175,9 @@ module JSONMapper
       # Just return true if this attribute is potentially self-referencing
       return true if attribute.self_referential?
 
+      # Return false if our JSON isn't a hash or an array
+      return false unless json.is_a?(Hash) || json.is_a?(Array)
+
       attribute.source_attributes.each do |source_attribute|
 
         # If the source attribute is a hash, do a key/value lookup on the json data
@@ -195,6 +198,9 @@ module JSONMapper
 
     def mapping_value(attribute, json)
       
+      # Return nil if our JSON isn't a hash or an array
+      return nil unless json.is_a?(Hash) || json.is_a?(Array)
+
       attribute.source_attributes.each do |source_attribute|
         
         # If the source attribute is a hash, do a key/value lookup on the json data
