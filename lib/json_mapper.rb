@@ -51,6 +51,8 @@ module JSONMapper
     def parse_collection(data, options = {})
 
       collection = []
+      return collection if data.nil? || data == ""
+
       json = get_json_structure(data, options)
 
       if json.is_a?(Array)
