@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{json_mapper}
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Trond Arve Nordheim"]
-  s.date = %q{2010-08-08}
+  s.date = %q{2010-08-09}
   s.email = %q{tanordheim@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
      "lib/json_mapper.rb",
      "lib/json_mapper/attribute.rb",
      "lib/json_mapper/attribute_list.rb",
+     "lib/json_mapper/parser.rb",
      "test.rb",
      "test/fixtures/complex.json",
      "test/fixtures/simple.json",
